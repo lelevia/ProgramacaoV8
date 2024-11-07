@@ -1,1 +1,179 @@
 
+from hub import port, motion_sensor, button
+import motor
+import motor_pair
+import runloop
+
+motor_pair.pair(motor_pair.PAIR_1, port.E, port.F)
+
+
+
+
+
+
+
+
+def conversao (cm):
+    y = (360*cm)/17.5
+    return y
+
+
+async def mover(distanciaCM, velocidade, kp):
+    distancia = conversao(distanciaCM)
+    motion_sensor.reset_yaw(0)
+    motor.reset_relative_position(port.E, 0)
+    while (abs(motor.relative_position(port.E))<distancia):
+        erro = (0 - motion_sensor.tilt_angles()[0])
+        correcao = erro*kp
+        motor_pair.move_tank(motor_pair.PAIR_1, round(velocidade-correcao), round(velocidade+correcao))
+    motor_pair.stop(motor_pair.PAIR_1)
+
+async def mover_original (distanciaCM, velocidade, aceleracao):
+    distancia = conversao(distanciaCM)
+    motor.reset_relative_position(port.B, 0)
+    while (abs(motor.relative_position(port.B))<distancia):
+        motor_pair.move_tank(motor_pair.PAIR_1, velocidade, velocidade, acceleration=aceleracao)
+    motor_pair.stop(motor_pair.PAIR_1)
+
+async def curva(angulo, kp):
+    motion_sensor.reset_yaw(0)
+    #await time(0.5)
+    erro = angulo - motion_sensor.tilt_angles()[0]
+    integral = 0
+
+    while (erro != 0):
+        erro = angulo - motion_sensor.tilt_angles()[0]
+        correcao = (erro*kp)
+        if integral>3000:integral = 3000
+        motor_pair.move_tank(motor_pair.PAIR_1, round(correcao*-1), round(correcao))
+    motor_pair.stop(motor_pair.PAIR_1)
+
+async def motorindA(angulo, velocidade):
+    motor.reset_relative_position(port.A, 0)
+    while abs(motor.relative_position(port.A))<abs(angulo):
+        motor.run(port.A, velocidade)
+    motor.stop(port.A)
+
+async def motorindB(angulo, velocidade):
+    motor.reset_relative_position(port.B, 0)
+    while abs(motor.relative_position(port.B))<abs(angulo):
+        motor.run(port.B, velocidade)
+    motor.stop(port.B)
+
+async def time (tempo):
+    i = 0
+    for i in range (tempo+1):
+        await runloop.sleep_ms(1000)
+
+def is_time():
+    return
+
+async def start1():
+    await mover(53, -500, 1) # andando pra frente
+    motor.run_for_degrees(port.B, 970, 700)
+    await time(0.2)
+    await motorindA(950, 1080)
+    await time(0.2)
+    #motor.run_for_degrees(port.B, 350, -1100)
+    #await time(0.2)
+    await mover(9, 200, 1)
+    await curva(-460, 0.4)
+    await mover(53, 1100, 1)
+
+async def start2():
+    await mover(10, -100, 1)
+    await curva(450, 1)
+
+
+starts = [start1, start2]
+indice_atual = 0
+
+async def mudar():
+    global indice_atual
+    while True:
+            if button.pressed(button.RIGHT):
+                if indice_atual < len(starts):
+                    await starts[indice_atual]()
+                    indice_atual += 1
+                    await time(3)
+
+
+
+
+
+
+#função principal:
+
+async def main():
+
+    '''while indice_atual < len(starts):
+        await mudar()
+        await time(3)
+    '''
+
+#Start 1
+    '''await mover(53, -500, 1) # andando pra frente
+    motor.run_for_degrees(port.B, 970, 700)
+    await time(0.2)
+    await motorindA(950, 1080)
+    await time(0.2)
+    #motor.run_for_degrees(port.B, 350, -1100)
+    #await time(0.2)
+    await mover(9, 200, 1)
+    await curva(-460, 0.4)
+    await mover(53, 1100, 1)'''
+
+    #kraken
+    await mover(35,-400,1) #Sai da zona
+    await curva(-290,0.4) #faz curva de ajuste
+    #motion_sensor.reset_yaw(0)
+    await mover(23,-350,1) #Andar pra frente
+    await curva(-610, 0.4) #faz outra curva
+    await mover(12.5,-200,1) #Pega o baú e levanta o mastro
+    await time(1) #espera 1 segundo
+    await motorindA(3080, 1110) #move a cremalheira
+    #await motorindB(220,-1000) #abaixar braço
+    #await motorindA(3000,1100) #Entrega mergulhador
+    await time(1) #espera 1 segundo
+    await mover(9.5,200,1) #Sai com o baú
+    await curva(415, 0.5) #vira na reta da coleta
+    motor.run_for_degrees(port.B, -700, 500) #baixa a garra em mov
+    """await time(0.5)"""
+    await mover(40, -400, 1) #anda reto
+    await motorindB(400, 1100) #levanta a garra
+    await mover(6, 400, 1) #da re
+    await curva(-460, 0.5) #faz curva em direção ao peixe pescador
+    await mover(20, -400, 1) #anda pra frente
+    await curva(-800, 0.5)
+    await mover(8, 400,1)
+    await curva(-550, 0.5)
+    await mover(130, -900, 1)
+    #await motorindA(3000,-1000) #Recolhe a cremalheira
+    #await curva(600,0.4) #faz mais uma curva
+    #await mover(60,1000,1)
+   # await curva(-610,0.3)
+
+
+#Levantar navio de pesquisa'''
+    
+    '''await mover(55,-500,1)
+    await mover(13,500,1)
+    await curva(-490,0.6)
+    await mover(4,-300,1)
+    await motorindB(1100,800)
+    await motorindB(100, -800)
+    await curva(415,0.5)
+    await mover(23,-400,1)
+    #await curva(-235, 0.5)
+    await mover(6, 400, 1)
+    await motorindA(900, 400)
+    
+    #await mover(5, 350, 1)
+    await motorindB(1050, 800)
+    await curva(250, 0.5)
+
+    await mover(65, 900, 1)'''
+
+
+
+runloop.run(main())
