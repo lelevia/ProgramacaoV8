@@ -85,7 +85,7 @@ async def start2():
     #motion_sensor.reset_yaw(0)
     await mover(20,-400,1) #Andar pra frente
     await curva(-610, 0.45) #faz outra curva
-    await mover(12.2,-200,1) #Pega o baú e levanta o mastro
+    await mover(12.2,-100,1) #Pega o baú e levanta o mastro
     await time(1) #espera 1 segundo
     await motorindA(2800, 1110) #move a cremalheira
     #await motorindB(220,-1000) #abaixar braço
