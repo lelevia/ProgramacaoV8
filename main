@@ -34,7 +34,7 @@ async def mover_original (distanciaCM, velocidade, aceleracao):
         motor_pair.move_tank(motor_pair.PAIR_1, velocidade, velocidade, acceleration=aceleracao)
     motor_pair.stop(motor_pair.PAIR_1)
 
-async def curva(angulo, kp):
+async def curva(angulo, kp, vm):
     motion_sensor.reset_yaw(0)
     #await time(0.5)
     erro = angulo - motion_sensor.tilt_angles()[0]
@@ -43,6 +43,9 @@ async def curva(angulo, kp):
     while (erro != 0):
         erro = angulo - motion_sensor.tilt_angles()[0]
         correcao = (erro*kp)
+        if abs(correcao) <vm:
+            if (correcao)>0: correcao=vm
+            if (correcao)<0: correcao=-vm
         if integral>3000:integral = 3000
         motor_pair.move_tank(motor_pair.PAIR_1, round(correcao*-1), round(correcao))
     motor_pair.stop(motor_pair.PAIR_1)
@@ -71,20 +74,23 @@ async def start1():
     await mover(53, -500, 1) # andando pra frente
     motor.run_for_degrees(port.B, 970, 700)
     await time(0.2)
+    await motor.run_for_degrees(port.B,200,-600)
+
     await motorindA(950, 1080)
     await time(0.2)
+
     #motor.run_for_degrees(port.B, 350, -1100)
     #await time(0.2)
     await mover(9, 200, 1)
-    await curva(-460, 0.4)
+    await curva(-460, 0.2,50)
     await mover(53, 1100, 1)
 
 async def start2():
     await mover(35,-600,1) #Sai da zona
-    await curva(-300,0.6) #faz curva de ajuste
+    await curva(-300,0.6,0) #faz curva de ajuste
     #motion_sensor.reset_yaw(0)
     await mover(20,-400,1) #Andar pra frente
-    await curva(-610, 0.45) #faz outra curva
+    await curva(-610, 0.45, 0) #faz outra curva
     await mover(12.2,-100,1) #Pega o baú e levanta o mastro
     await time(1) #espera 1 segundo
     await motorindA(2800, 1110) #move a cremalheira
@@ -93,7 +99,7 @@ async def start2():
     await time(1) #espera 1 segundo
     await mover(9.5,300,1) #Sai com o baú
     await motorindA(1000, 1100)
-    await curva(425, 0.6) #vira na reta da coleta
+    await curva(425, 0.6, 0) #vira na reta da coleta
     motor.run_for_degrees(port.B, -700, 500) #baixa a garra em mov
 
     await mover(39, -600, 1) #anda reto
@@ -102,24 +108,48 @@ async def start2():
 
 async def start3():
     await mover(55,-500,1)#sai da base
-    await mover(11,450,1)#retira o coral
-    await curva(-490,0.5)#vira pro barco
-    await mover(5.5,-300,1)#levanta relativamente
+    await mover(14,400,1)#retira o coral
+    await curva(-490,0.5,0)#vira pro barco
+    await time(1.5)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1,145,0,velocity=-60)
+    await time(1)
+    #await mover(6.5,-100,1)#levanta relativamente
     await motorindB(1100,800)#gira o barco
     motor.run_for_degrees(port.B, 100, -800)#volta a pa
     await time(0.4)
 
-    await curva(415,0.55)#vai em direção as coletas e amostras
+    await curva(415,0.55,0)#vai em direção as coletas e amostras
     await mover(24,-500,1)#avança
 
-    await mover(7, 500, 1)#volta
+    await mover(6, 500, 1)#volta
     await motorindA(700, 900)#pega a amostras
 
     #await mover(5, 350, 1)
     await motorindB(770, 900)#pega as coletas
-    await curva(160, 0.55)#vira pra base
+    #await curva(190, 0.55,0)#vira pra base
 
-    await mover(65, 1100, 1)#volta pra base
+    await mover(10, 1100, 1)#volta pra base
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,1300,510,600)
+
+async def start4():
+    await mover(75,-400,1)
+    await curva(-422,0.4,0)
+    await mover(7,-120,1)
+    await time(1)
+    await mover(6.5,250,1)
+    await curva(-150,0.4,0)
+    await mover(2,200,1)
+    await curva(-300,0.4,0)
+    await motorindA(50,100)
+    await mover(16,250,1)
+    await motorindA(950,800)
+
+async def start5():
+    await mover (45, -400,0.5)
+    await time (0.5)
+    await mover (45, 1000,0.5)
+
+    #await motor_pair.move_for_degrees(motor_pair.PAIR_1,145,0,velocity=-150,acceleration=4000)
 
 
 
@@ -128,8 +158,9 @@ async def start3():
 
 
 
-starts = [start1, start2, start3, '''start4, start5, start6, start7''']
-indice_atual = 0
+
+starts = [start1, start2, start3, start4,'''start5, start6, start7''']
+indice_atual = 3
 
 async def mudar():
     global indice_atual
@@ -155,6 +186,7 @@ async def main():
     while indice_atual < len(starts):
         await mudar()
         await time(3)
+
 
 
 
@@ -205,7 +237,7 @@ async def main():
     await time(0.4)
 
     await curva(415,0.55)#vai em direção as coletas e amostras
-    await mover(24,-600,1)#avança 
+    await mover(24,-600,1)#avança
 
     await mover(7, 600, 1)#volta
     await motorindA(700, 900)#pega a amostras
