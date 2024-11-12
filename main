@@ -100,10 +100,35 @@ async def start2():
     await motorindB(400, 1100) #levanta a garra
     await mover(140, 1050, 1)
 
-    
+async def start3():
+    await mover(55,-500,1)#sai da base
+    await mover(11,450,1)#retira o coral
+    await curva(-490,0.5)#vira pro barco
+    await mover(5.5,-300,1)#levanta relativamente
+    await motorindB(1100,800)#gira o barco
+    motor.run_for_degrees(port.B, 100, -800)#volta a pa
+    await time(0.4)
+
+    await curva(415,0.55)#vai em direção as coletas e amostras
+    await mover(24,-500,1)#avança
+
+    await mover(7, 500, 1)#volta
+    await motorindA(700, 900)#pega a amostras
+
+    #await mover(5, 350, 1)
+    await motorindB(770, 900)#pega as coletas
+    await curva(160, 0.55)#vira pra base
+
+    await mover(65, 1100, 1)#volta pra base
 
 
-starts = [start1, start2]
+
+
+
+
+
+
+starts = [start1, start2, start3, '''start4, start5, start6, start7''']
 indice_atual = 0
 
 async def mudar():
@@ -124,10 +149,14 @@ async def mudar():
 
 async def main():
 
+    '''await mover(59, -900, 1)
+    await mover(59, 900, 1)'''
+
     while indice_atual < len(starts):
         await mudar()
         await time(3)
-    
+
+
 
 
     '''await mover(53, -500, 1) # andando pra frente
@@ -166,24 +195,28 @@ async def main():
 
 
 #Levantar navio de pesquisa'''
-    
-    '''await mover(55,-500,1)
-    await mover(13,500,1)
-    await curva(-490,0.6)
-    await mover(4,-300,1)
-    await motorindB(1100,800)
-    await motorindB(100, -800)
-    await curva(415,0.5)
-    await mover(23,-400,1)
-    #await curva(-235, 0.5)
-    await mover(6, 400, 1)
-    await motorindA(900, 400)
-    
-    #await mover(5, 350, 1)
-    await motorindB(1050, 800)
-    await curva(250, 0.5)
 
-    await mover(65, 900, 1)'''
+    '''await mover(55,-600,1)#sai da base
+    await mover(11.5,500,1)#retira o coral
+    await curva(-490,0.5)#vira pro barco
+    await mover(5.5,-300,1)#levanta relativamente
+    await motorindB(1100,800)#gira o barco
+    motor.run_for_degrees(port.B, 100, -800)#volta a pa
+    await time(0.4)
+
+    await curva(415,0.55)#vai em direção as coletas e amostras
+    await mover(24,-600,1)#avança 
+
+    await mover(7, 600, 1)#volta
+    await motorindA(700, 900)#pega a amostras
+
+    #await mover(5, 350, 1)
+    await motorindB(770, 900)#pega as coletas
+    await curva(160, 0.55)#vira pra base
+
+    await mover(65, 1100, 1)#volta pra base'''
+
+
 
 
 
