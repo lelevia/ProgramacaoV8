@@ -92,15 +92,25 @@ async def start2():
     #await motorindA(2800, 1110) #move a cremalheira
     #await motorindB(220,-1000) #abaixar braço
     #await motorindA(3000,1100) #Entrega mergulhador
-    await time(1) #espera 1 segundo
+    #motorindA(300, -1100)
+
+    #await time(1) #espera 1 segundo
     await mover(17,300,1) #Sai com o baú
     #await motorindA(1000, 1100)
     await curva(400, 0.6, 0) #vira na reta da coleta
     motor.run_for_degrees(port.B, -700, 500) #baixa a garra em mov
-
-    await mover(41, -600, 1) #anda reto
+    await mover(10, -400, 1) #anda reto
+    await motor.run_for_degrees(port.A,-300,800)
+    await mover (25,-400,1)
+    await motorindA(300, 700)
+    #await motorindA(300, -700)
+    await mover(6, -350, 1) #anda reto
+    
     await motorindB(700, 1100) #levanta a garra
-    await mover(140, 1050, 1)
+    await curva (6,1,0)
+    #await mover(140, 1050, 1)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,2300,1100,1100)
+
 
 async def start3():
     await mover(55,-500,1)#sai da base
@@ -136,6 +146,10 @@ async def start4():
     await mover(38,-1100,0)
 
 async def start5():
+    await motorindA(-200, 300)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 900, 0)
+
+async def start6():
     await mover(70,-400,1)
     await curva(-430,0.4,0)
     await mover(8,-120,1)
@@ -163,7 +177,7 @@ async def start5():
 
 
 starts = [start1, start2, start3,start4,start5]
-indice_atual = 2
+indice_atual = 1
 
 async def mudar():
     global indice_atual
@@ -177,10 +191,14 @@ async def mudar():
 #função principal:
 
 async def main():
-    while indice_atual < len(starts):
+    '''while indice_atual < len(starts):
         light_matrix.write(">")
 
         await mudar()
-        await time(3)
+        await time(3)'''
+    await motorindA(200, 300)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 600, 0)
+
+
 
 runloop.run(main())
