@@ -6,12 +6,6 @@ import runloop
 motor_pair.pair(motor_pair.PAIR_1, port.E, port.F)
 
 
-
-
-
-
-
-
 def conversao (cm):
     y = (360*cm)/17.5
     return y
@@ -68,111 +62,83 @@ async def time (tempo):
         await runloop.sleep_ms(1000)
 
 async def start1():
-    await mover(53, -500, 1) # andando pra frente
-    motor.run_for_degrees(port.B, 970, 700)
-    await time(0.2)
-    await motor.run_for_degrees(port.B,200,-600)
+    await mover(53, -500, 1) #sai da base em direção ao berçario
+    motor.run_for_degrees(port.B, 970, 700) #levanta o berçario
+    await time(0.2) #da um intervalo 
+    await motor.run_for_degrees(port.B,200,-600) #baixa a cremalheira
+    await motorindA(950, 1080) #pega o mergulhador e faz a parte de baixo
+    await time(0.2) #da um intervalo
+    await mover(9, 200, 1) #sai da missão
+    await curva(-460, 0.2,50) #faz uma curva e coleta as amostras
+    await mover(53, 1100, 1) #volta pra base
 
-    await motorindA(950, 1080)
-    await time(0.2)
-
-    #motor.run_for_degrees(port.B, 350, -1100)
-    #await time(0.2)
-    await mover(9, 200, 1)
-    await curva(-460, 0.2,50)
-    await mover(53, 1100, 1)
-
-async def start2():
-    await mover(35,-500,1) #Sai da zona
+async def start2(): #kraken
+    await mover(35,-500,1) #Sai da zona 
     await curva(-300,0.6,0) #faz curva de ajuste
-    #motion_sensor.reset_yaw(0)
     await mover(24,-400,1) #Andar pra frente
     await curva(-620, 0.45, 0) #faz outra curva
     await mover(22,-200,1) #Pega o baú e levanta o mastro
     await mover(17,300,1) #Sai com o baú
     await curva(400, 0.6, 0) #vira na reta da coleta
-    motor.run_for_degrees(port.B, 1100, 1000) #baixa a garra em mov
+    motor.run_for_degrees(port.B, 1100, -1000) #baixa a garra em mov
     await mover(10, -400, 1) #anda reto
-    #await motorindA(-900, 800)
     motor.run_for_degrees(port.A,-300,900)
     await mover (23.5,-400,1)
-    #await motorindA(300, 700)
     await mover(6, -350, 1) #anda reto
-
-    await motorindB(300, -1100) #levanta a garra
-    await motorindA(300, 700)
-    #motor.run_for_degrees(port.A, 900, 900)
-    #await curva (6,1,0)
-    #await mover(140, 1050, 1)
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,2300,1100,1100)
+    await motorindB(600, 1100) #levanta a garra
+    await motorindA(300, 700) #recolhe o braço
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,2300,1100,1100) #volta pra base
 
 
-async def start3():
+async def start3(): #trident
+    await motorindB(600, -200)
+    await mover(28, 200, 1)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,1250,900, 650)
+
+async def start4(): #banana
     await mover(55,-500,1)#sai da base
     await mover(13,400,1)#retira o coral
     await curva(-475,0.5,0)#vira pro barco
-    #wait motor_pair.move_for_degrees(motor_pair.PAIR_1,145,0,velocity=-60,acceleration=5000)
     await mover(6.2,-100,1)#levanta relativamente
     await motorindB(1200,800)#gira o barco
     motor.run_for_degrees(port.B, 180, -800)#volta a pa
-    #await time(0.4)
     await curva(415,0.55,0)#vai em direção as coletas e amostras
     await mover(16,-500,1)#avança
-    #await mover(6, 500, 1)#volta
     await motorindA(700, 900)#pega a amostras
-    #await mover(5, 350, 1)
     await motorindB(770, 900)#pega as coletas
-    #await curva(190, 0.55,0)#vira pra base
     await mover(10, 1100, 1)#volta pra base
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,1300,850,1050)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,1300,850,1050)#volta pra base
 
+async def start5(): #sonar
+    await mover (30, -500,0.5)#sai da base
+    await curva(390,0.6,0)#vira em direção ao sonar
+    await mover (56.5,-700,1)#anda em direção ao sonar
+    await motorindB(2000,800)#gira o motor B e faz o sonar
+    await mover(35,450,1)#volta sentido criatura desconhecida
+    await curva(-900,0.9,0) #faz um curva
+    await mover(7,1000,0) #da a ré na frente do polvo
+    await curva(-900,0.9,0) #vira a traseira pro polvo
+    await mover(8,1000,0) #coleta o polvo
+    await mover(38,-1100,0)#volta pra base
 
-
-async def start4():
-    await mover (30, -500,0.5)
-    await curva(390,0.6,0)
-    await mover (56.5,-700,1)
-    await motorindB(2000,800)
-    await mover(35,450,1)
-    await curva(-900,0.9,0)
-    await mover(5,1000,0)
-    await curva(-900,0.9,0)
-    await mover(8,1000,0)
-    await mover(38,-1100,0)
-
-async def start5():
-    await motorindA(-200, 300)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 900, 0)
-
-async def start6():
-    await mover(70,-400,1)
-    await curva(-430,0.4,0)
-    await mover(8,-120,1)
-    await time(0.7)
-    await mover(7.5,250,1)
-    await curva(-220,0.4,0)
-    await mover(3.5,200,1)
-    await curva(-300,0.4,0)
-    await motorindA(50,100)
-    await mover(48,450,1)
-    await curva(-450,0.4,0)
-    await mover (15,200,1)
+async def start6(): 
+    await mover(70,-400,1)#sai da base
+    await curva(-430,0.4,0)#faz uma curva na baleia
+    await mover(8,-120,1)#bate na parte de baixo da baleia e entrega os krills
+    await time(0.7)#da um intervalo
+    await mover(7.5,250,1)#sai da baleia
+    await curva(-220,0.4,0)#faz uma curva perto da m14
+    await mover(3.5,200,1)#sai da linha da coleta(m14)
+    await curva(-300,0.4,0)#completa a curva
+    await motorindA(50,100)#abaixa a cremaleira
+    await mover(48,450,1)#vai na missão compartilhada
+    await curva(-450,0.4,0)#faz uma curva na compartilhada
+    await mover (15,200,1) #da ré 
     await motorindB(1200,800)#girar o submarino
 
 
-
-    #await motor_pair.move_for_degrees(motor_pair.PAIR_1,145,0,velocity=-150,acceleration=4000)
-
-
-
-
-
-
-
-
-
-starts = [start1, start2, start3,start4,start5]
-indice_atual = 1
+starts = [start1, start2, start3,start4,start5, start6]
+indice_atual = 2
 
 async def mudar():
     global indice_atual
@@ -191,8 +157,5 @@ async def main():
 
         await mudar()
         await time(3)
-
-
-
 
 runloop.run(main())
