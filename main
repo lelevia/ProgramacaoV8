@@ -89,25 +89,20 @@ async def start2():
     await mover(24,-400,1) #Andar pra frente
     await curva(-620, 0.45, 0) #faz outra curva
     await mover(22,-200,1) #Pega o baú e levanta o mastro
-    #await motorindA(2800, 1110) #move a cremalheira
-    #await motorindB(220,-1000) #abaixar braço
-    #await motorindA(3000,1100) #Entrega mergulhador
-    #motorindA(300, -1100)
-
-    #await time(1) #espera 1 segundo
     await mover(17,300,1) #Sai com o baú
-    #await motorindA(1000, 1100)
     await curva(400, 0.6, 0) #vira na reta da coleta
-    motor.run_for_degrees(port.B, -700, 500) #baixa a garra em mov
+    motor.run_for_degrees(port.B, 1100, 1000) #baixa a garra em mov
     await mover(10, -400, 1) #anda reto
-    await motor.run_for_degrees(port.A,-300,800)
-    await mover (25,-400,1)
-    await motorindA(300, 700)
-    #await motorindA(300, -700)
+    #await motorindA(-900, 800)
+    motor.run_for_degrees(port.A,-300,900)
+    await mover (23.5,-400,1)
+    #await motorindA(300, 700)
     await mover(6, -350, 1) #anda reto
-    
-    await motorindB(700, 1100) #levanta a garra
-    await curva (6,1,0)
+
+    await motorindB(300, -1100) #levanta a garra
+    await motorindA(300, 700)
+    #motor.run_for_degrees(port.A, 900, 900)
+    #await curva (6,1,0)
     #await mover(140, 1050, 1)
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,2300,1100,1100)
 
@@ -191,13 +186,12 @@ async def mudar():
 #função principal:
 
 async def main():
-    '''while indice_atual < len(starts):
+    while indice_atual < len(starts):
         light_matrix.write(">")
 
         await mudar()
-        await time(3)'''
-    await motorindA(200, 300)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 600, 0)
+        await time(3)
+
 
 
 
