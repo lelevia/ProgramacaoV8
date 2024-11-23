@@ -64,7 +64,7 @@ async def time (tempo):
 async def start1():
     await mover(53, -500, 1) #sai da base em direção ao berçario
     motor.run_for_degrees(port.B, 970, 700) #levanta o berçario
-    await time(0.2) #da um intervalo 
+    await time(0.2) #da um intervalo
     await motor.run_for_degrees(port.B,200,-600) #baixa a cremalheira
     await motorindA(950, 1080) #pega o mergulhador e faz a parte de baixo
     await time(0.2) #da um intervalo
@@ -73,7 +73,7 @@ async def start1():
     await mover(53, 1100, 1) #volta pra base
 
 async def start2(): #kraken
-    await mover(35,-500,1) #Sai da zona 
+    await mover(35,-500,1) #Sai da zona
     await curva(-300,0.6,0) #faz curva de ajuste
     await mover(24,-400,1) #Andar pra frente
     await curva(-620, 0.45, 0) #faz outra curva
@@ -121,7 +121,7 @@ async def start5(): #sonar
     await mover(8,1000,0) #coleta o polvo
     await mover(38,-1100,0)#volta pra base
 
-async def start6(): 
+async def start6():
     await mover(70,-400,1)#sai da base
     await curva(-430,0.4,0)#faz uma curva na baleia
     await mover(8,-120,1)#bate na parte de baixo da baleia e entrega os krills
@@ -132,8 +132,9 @@ async def start6():
     await curva(-300,0.4,0)#completa a curva
     await motorindA(50,100)#abaixa a cremaleira
     await mover(48,450,1)#vai na missão compartilhada
+    
     await curva(-450,0.4,0)#faz uma curva na compartilhada
-    await mover (15,200,1) #da ré 
+    await mover (15,200,1) #da ré
     await motorindB(1200,800)#girar o submarino
 
 
@@ -151,11 +152,25 @@ async def mudar():
 
 #função principal:
 
+async def curvapyt(angulo, kp, ki):
+    integral = 0
+    motion_sensor.reset_yaw(0)
+    while abs(angulo)>abs(motion_sensor.tilt_angles()[0]-40):
+        erro = angulo - motion_sensor.tilt_angles()[0]
+        integral = integral + erro
+        if (integral>1700):
+            integral = 1700
+        correcao = (erro * kp)+(integral*ki)
+        motor_pair.move_tank(motor_pair.PAIR_1, round(correcao), round(correcao*-1))
+    motor_pair.stop(motor_pair.PAIR_1)
+    
+
+
 async def main():
     while indice_atual < len(starts):
         light_matrix.write(">")
 
         await mudar()
         await time(3)
-
 runloop.run(main())
+
