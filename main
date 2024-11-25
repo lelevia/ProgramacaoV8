@@ -91,11 +91,14 @@ async def start2(): #kraken
 
 
 async def start3(): #trident
-    await motorindB(600, -200)
+    await mover(45, -400, 1)
+    await curvaD(450, 0.5, 0)
+    '''await motorindB(600, -200)
     await mover(28, 200, 1)
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,1250,900, 650)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,1250,900, 650)'''
+#async def start4(): #travessia
 
-async def start4(): #banana
+async def start5(): #banana
     await mover(55,-500,1)#sai da base
     await mover(13,400,1)#retira o coral
     await curva(-475,0.5,0)#vira pro barco
@@ -109,7 +112,7 @@ async def start4(): #banana
     await mover(10, 1100, 1)#volta pra base
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,1300,850,1050)#volta pra base
 
-async def start5(): #sonar
+async def start6(): #sonar
     await mover (30, -500,0.5)#sai da base
     await curva(390,0.6,0)#vira em direção ao sonar
     await mover (56.5,-700,1)#anda em direção ao sonar
@@ -121,7 +124,7 @@ async def start5(): #sonar
     await mover(8,1000,0) #coleta o polvo
     await mover(38,-1100,0)#volta pra base
 
-async def start6():
+async def start7():
     await mover(70,-400,1)#sai da base
     await curva(-430,0.4,0)#faz uma curva na baleia
     await mover(8,-120,1)#bate na parte de baixo da baleia e entrega os krills
@@ -138,7 +141,7 @@ async def start6():
     await motorindB(1200,800)#girar o submarino
 
 
-starts = [start1, start2, start3,start4,start5, start6]
+starts = [start1, start2, start3,'''start4''',start5, start6, start7]
 indice_atual = 2
 
 async def mudar():
@@ -150,27 +153,42 @@ async def mudar():
                     indice_atual += 1
                     await time(3)
 
-#função principal:
-
-async def curvapyt(angulo, kp, ki):
+async def curvaD(angulo, kp, ki):
     integral = 0
     motion_sensor.reset_yaw(0)
-    while abs(angulo)>abs(motion_sensor.tilt_angles()[0]-40):
-        erro = angulo - motion_sensor.tilt_angles()[0]
-        integral = integral + erro
-        if (integral>1700):
-            integral = 1700
-        correcao = (erro * kp)+(integral*ki)
+    while (abs(angulo)-10)>abs(motion_sensor.tilt_angles()[0]):
+        erro = abs(angulo) - abs(motion_sensor.tilt_angles()[0])
+        integral = integral = erro
+        if integral>0:
+            integral=0
+        correcao = (erro*kp)+(erro*ki)
+
         motor_pair.move_tank(motor_pair.PAIR_1, round(correcao), round(correcao*-1))
     motor_pair.stop(motor_pair.PAIR_1)
+#função principal:
+
+'''async def curvapyt(angulo, kp, ki):
+    integral = 0
+    motion_sensor.reset_yaw(0)
+    while abs(angulo)>abs(motion_sensor.tilt_angles()[0]-85):
+        erro = angulo - motion_sensor.tilt_angles()[0]
+        integral = integral + erro
+        if (integral>1200):
+            integral = 1200
+        correcao = (erro * kp)+(integral*ki)
+        motor_pair.move_tank(motor_pair.PAIR_1, round(correcao), round(correcao*-1))
+    motor_pair.stop(motor_pair.PAIR_1)'''
     
 
 
 async def main():
-    while indice_atual < len(starts):
+    '''while indice_atual < len(starts):
         light_matrix.write(">")
 
         await mudar()
-        await time(3)
+        await time(3)'''
+    await mover(50, 600, 1)
+    await mover(40, 200, 1)
+    #await curvaD(-900, 0.5, 0.02)
 runloop.run(main())
 
