@@ -10,22 +10,6 @@ def conversao (cm):
     y = (360*cm)/17.5
     return y
 
-
-
-'''async def giro (angulo, kp):
-    if angulo>0:
-        while abs(angulo)>=abs(motion_sensor.tilt_angles()[0]):
-            erro = angulo - motion_sensor.tilt_angles()[0]
-            correcao = erro*kp
-            motor_pair.move_tank(motor_pair.PAIR_1, round(correcao*-1), round(correcao))
-    else:
-        while abs(angulo)>=abs(motion_sensor.tilt_angles()[0]):
-            erro = abs(angulo) - abs(motion_sensor.tilt_angles()[0])
-            correcao = erro*kp
-            motor_pair.move_tank(motor_pair.PAIR_1, round(correcao), round(correcao*-1))
-        motor_pair.stop(motor_pair.PAIR_1)'''
-
-
 async def giroAz(angulo, kp):
     # Recupera o valor atual do sensor de giroscópio em decigraus
     angulo_atual = motion_sensor.tilt_angles()[0]
@@ -89,7 +73,7 @@ async def moverAz(distancia,velocidade, kp, referencia, aceleracao):
             correcao = erro * kp
             motor_pair.move(motor_pair.PAIR_1, round(correcao*-1), velocity=velocidade, acceleration=aceleracao)
         motor_pair.stop(motor_pair.PAIR_1)
-    
+
 
 async def motorindA(angulo, velocidade):
     motor.reset_relative_position(port.A, 0)
@@ -108,6 +92,8 @@ async def time (tempo):
     for i in range (tempo+1):
         await runloop.sleep_ms(1000)
 
+async def contador()
+
 async def start1():
     await moverAz(53, 650, 0.4, 0, 2000) #sai da base em direção ao berçario
     motor.run_for_degrees(port.B, 970, 700) #levanta o berçario
@@ -118,7 +104,7 @@ async def start1():
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,200,0,velocity=-100)
     #await moverAz(9, -200, 0.4, 0, 5000) #sai da missão
     await giroAz(-460, 0.6) #faz uma curva e coleta as amostras
-    await moverAz(53, -1100, 0.4, -460, 5000) #volta pra base'''
+    await moverAz(53, -1100, 0.4, -460, 5000) #volta pra base
 
 async def start2(): #kraken
     await moverAz(35,500,0.3, 0, 5000) #Sai da zona
@@ -150,25 +136,22 @@ async def start3(): #trident
     #await moverAz(30, -90, 0.35, 500, 2000)
     await giroAz(0, 0.6)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 1700, 0, velocity=-1000)
-    
-    
+
+
 
 async def start4(): #travessia
     await moverAz(45, 500, 0.3, 0, 2000)
     await motorindB(300, 500)
     await moverAz(45, 500, 0.3, 0, 2000)
-    await motorindB(400, -500)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 450, 0, velocity=-400)
+    await motorindB(270, -500)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 500, 0, velocity=-400)
     #await moverAz(18, -500, 0.35, 0, 2000)
-    await motorindB(400, 500)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 900, 0, velocity=900)
+    await motorindB(480, 500)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 720, 0, velocity=900)
+    motor.run_for_degrees(port.B, 430, -500)
+    #await motor_pair.move_for_degrees(motor_pair.PAIR_1, 1800, 0, velocity=-820)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, 2000, -900, -790)
     #await moverAz(45, 900, 0.35, 0, 2000)
-
-    
-    '''await giroAz(1490, 0.3)
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, -1100, 900, 1000)
-    await moverAz(35, -400, 0.35, 1490, 2000)'''
-
 
 async def start5(): #banana
     await moverAz(39,500,0.35, 0, 2000)#sai da base
@@ -196,7 +179,7 @@ async def start6(): #sonar
     await motorindB(2000,800)#gira o motor B e faz o sonar
     await time(0.3)
     await moverAz(70,-1000,0, 390, 2000)#volta sentido criatura desconhecida
-    
+
 async def start7():
     await moverAz(60, 400,0.4, 0, 2000)#sai da base
     await giroAz(-410, 0.40)
@@ -213,23 +196,6 @@ async def start7():
     await moverAz(9, 400, 0.35, -1300, 2000)
     await moverAz(48, -400, 0, -720, 2000)
     await moverAz(11.5, 400, 0, -900, 2000)
-
-
-    
-
-
-
-    '''await curva(-430,0.4,0)#faz uma curva na baleia
-    await mover(8,-120,1)#bate na parte de baixo da baleia e entrega os krills
-    await time(0.7)#da um intervalo
-    await mover(7.5,250,1)#sai da baleia
-    await curva(-220,0.4,0)#faz uma curva perto da m14
-    await mover(3.5,200,1)#sai da linha da coleta(m14)
-    await curva(-300,0.4,0)#completa a curva
-    await motorindA(50,100)#abaixa a cremaleira
-    await mover(48,450,1)#vai na missão compartilhada'''
-
-
 
 starts = [start1, start2, start3,start4,start5,start6,start7]
 indice_atual = 3
@@ -251,8 +217,5 @@ async def main():
         await mudar()
         await time(3)
     
-    '''await moverAz(50, 600, 0.35, 0, 100)
-    await mover(40, 200, 1)'''
-    #await curvaD(-900, 0.5, 0.02)
-runloop.run(main())
 
+runloop.run(main())
