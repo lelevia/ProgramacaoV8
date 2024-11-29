@@ -103,23 +103,23 @@ async def start1():
     await time(0.2) #da um intervalo
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,200,0,velocity=-100)
     #await moverAz(9, -200, 0.4, 0, 5000) #sai da missão
-    await giroAz(-460, 0.6) #faz uma curva e coleta as amostras
+    await giroAz(-460, 0.35) #faz uma curva e coleta as amostras
     await moverAz(53, -1100, 0, -460, 5000) #volta pra base
 
 async def start2(): #kraken
     await moverAz(35,500,0.3, 0, 5000) #Sai da zona
     await giroAz(-300,0.6) #faz curva de ajuste
-    await moverAz(20,400,0.3, -300, 5000) #Andar pra frente
+    await moverAz(23,400,0.3, -300, 5000) #Andar pra frente
     await giroAz(-900, 0.6) #faz outra curva
     await moverAz(22,200,0.35, -900, 5000) #Pega o baú e levanta o mastro
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,450,0,velocity=-200)
     #await moverAz(17,-300,0.35, 0, 5000) #Sai com o baú
-    await giroAz(-505, 0.35) #vira na reta da coleta
+    await giroAz(-550, 0.35) #vira na reta da coleta
     await motor.run_for_degrees(port.B, 1100, -1000) #baixa a garra em mov
-    await moverAz(10, 400, 0.35, -505, 5000) #anda reto
+    await moverAz(10, 400, 0.35, -550, 5000) #anda reto
     motor.run_for_degrees(port.A,-300,900)
-    await moverAz(23.5,400,0.35, -505, 5000)
-    await moverAz(10, 350, 0.35, -505, 5000) #anda reto
+    await moverAz(23.5,400,0.35, -550, 5000)
+    await moverAz(10, 350, 0.35, -550, 5000) #anda reto
     await motorindB(600, 1100) #levanta a garra
     await motorindA(300, 700) #recolhe o braço
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,2300,-1100,-1100) #volta pra base
@@ -129,7 +129,8 @@ async def start3(): #trident
     await moverAz(46, 400, 0, 0, 5000)
     await giroAz(500, 0.55)
     #await time(0.3)
-    await moverAz(22, 400, 0, 500, 2000)
+    await moverAz(22, 250, 0.2, 500, 2000)
+    await time(0.5)
     motor.run_for_degrees(port.B, 700, -350)
     await time(0.4)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 450, 0, velocity=-100)
@@ -154,16 +155,16 @@ async def start4(): #travessia
     #await moverAz(45, 900, 0.35, 0, 2000)
 
 async def start5(): #banana
-    await moverAz(39,500,0.35, 0, 2000)#sai da base
+    await moverAz(39,500,0, 0, 2000)#sai da base
     #await moverAz(11,-400,0.35, 0, 2000)#retira o coral
     await giroAz(-475,0.5)#vira pro barco
-    await moverAz(4.5,100,0.4, -475, 2000)#levanta relativamente
+    await moverAz(4.5,100,0, -475, 2000)#levanta relativamente
     await motorindB(1600,800)#gira o barco
-    await moverAz(10,-200,0.3,-475,800)
+    await moverAz(10,-200,0,-475,800)
     await giroAz(-180,0.33)#vai em direção as coletas e amostras
     await time(0.2)
     motor.run_for_degrees(port.B, 800, -800)
-    await moverAz(28,500,0.35, -180, 2000)#avança
+    await moverAz(28,500,0, -180, 2000)#avança
     await motorindB(800,800)
     await motorindA(900, 400)
     await moverAz(10,-500,0.3,-180,2000)
@@ -173,17 +174,17 @@ async def start5(): #banana
 
 
 async def start6(): #sonar
-    await moverAz (30, 500,0.4, 0, 2000)#sai da base
+    await moverAz (30, 500,0, 0, 2000)#sai da base
     await giroAz(390,0.35)#vira em direção ao sonar
-    await moverAz(56.5,700,0.35, 390, 2000)#anda em direção ao sonar
+    await moverAz(56.5,700,0, 390, 2000)#anda em direção ao sonar
     await motorindB(2000,800)#gira o motor B e faz o sonar
     await time(0.3)
     await moverAz(70,-1000,0, 390, 2000)#volta sentido criatura desconhecida
 
 async def start7():
-    await moverAz(70, 400,0.4, 0, 2000)#sai da base
+    await moverAz(70, 400,0, 0, 2000)#sai da base
     await giroAz(-450, 0.40)
-    await moverAz(11, 150, 0.5,-410,2000)
+    await moverAz(11, 150, 0,-410,2000)
     #await time(0.5)
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,-400, 500,500)
     await moverAz(55, -500, 0, -900,2000)
@@ -198,7 +199,7 @@ async def start7():
     await moverAz(11.5, 400, 0, -900, 2000)
 
 starts = [start1, start2, start3,start4,start5,start6,start7]
-indice_atual = 0
+indice_atual = 1
 
 async def mudar():
     global indice_atual
