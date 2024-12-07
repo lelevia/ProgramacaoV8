@@ -139,10 +139,13 @@ async def start3(): #trident
 
 
 async def start4(): #travessia
+    await motorindB(900, 900)
     await moverAz(95, 500, 0, 0, 2000)
     await moverAz(20, -400, 0, 0, 2000)
-    await giroAz(300, 0.4)
-    await moverAz(40, 400, 0, 300, 2000)
+    await motorindB(500, -900)
+    await giroAz(900, 0.45)
+    await moverAz(17, 400, 0, 900, 2000)
+    await moverAz(45, 400, 0, 0, 5000)
     await moverAz(49, 400, 0, 0, 2000)
     await giroAz(-450, 0.35)
     await moverAz(24, -400, 0, -450, 2000)
@@ -194,7 +197,7 @@ async def start7():
     await moverAz(11.5, 400, 0, -900, 2000)
 
 starts = [start1, start2, start3,start4,start5,start6,start7]
-indice_atual = 2
+indice_atual = 3
 
 async def mudar():
     global indice_atual
