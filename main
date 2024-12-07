@@ -125,26 +125,16 @@ async def start2(): #kraken
 
 
 async def start3(): #trident
-    await moverAz(53.8, 400, 0.3, 0, 5000)
-    #await time(0.15)
-    await giroAz(530, 0.7)
-    #await time(0.15)
-    await moverAz(16, 300, 0, 550, 2000)
+    await moverAz(53.3, 400, 0.3, 0, 5000)
+    
+    await giroAz(500, 0.35)
+    await moverAz(13, 300, 0, 500, 2000)
     await motor.run_for_degrees(port.B, 300, -500)
-    #await time(0.15)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 480, 0, velocity=-100)
-    #await moverAz(30, -90, 0.35, 500, 2000)
-    await giroAz(0, 1.6)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 280, 0, velocity=-100)
+    await motor.run_for_degrees(port.B, 900, 500)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 280, 0, velocity=-100)
+    await giroAz(0, 0.5)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 2000, 0, velocity=-1000)
-    """await moverAz(20, 400, 0, 0, 2000)
-    await giroAz(-900, 0.43)
-    #await time(0.2)
-    await moverAz(40, 400, 0, -900, 2000)
-    await time(0.3)
-    await giroAz(500, 0.3)
-    await time(0.5)
-    await moverAz(15, 200, 0.3, 500, 2000)
-"""
 
 
 
@@ -204,7 +194,7 @@ async def start7():
     await moverAz(11.5, 400, 0, -900, 2000)
 
 starts = [start1, start2, start3,start4,start5,start6,start7]
-indice_atual = 3
+indice_atual = 2
 
 async def mudar():
     global indice_atual
