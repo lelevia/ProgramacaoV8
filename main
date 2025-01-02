@@ -113,6 +113,13 @@ async def time (tempo):
     #await moverAz(100, 800, 0.35, 0.000002, 0, 5000, 0)'''
 
 
+async def startini():
+    await moverAz(67, 600, 0, 0, 0, 5000, 0)
+    #await time(0.02)
+    await giroAz(900, 0.45, 0.0000003)
+    await moverAz(108, 900, 0.45, 0.000002, 900, 5000, 0.7)
+    await giroAz(1600, 0.9, 0.000003)
+    await moverAz(57, 600, 0, 0, 1600, 5000, 0)
 
 async def start1():
     await moverAz(52.4, 550, 0.4,0, 0, 4000,0.9) #sai da base em direção ao berçario
@@ -120,7 +127,7 @@ async def start1():
     await motor.run_for_degrees(port.B,550,-900) #baixa a cremalheira
     await motorindA(1250, 1080) #pega o mergulhador e faz a parte de baixo
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,200,0,velocity=-200)
-    await giroAz(-390, 0.5, 0.000002) #faz uma curva e coleta as amostras
+    await giroAz(-400, 0.55, 0.000002) #faz uma curva e coleta as amostras
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, -1650, 800,1050)
     #await moverAz(53, -1100, 0, -460, 5000,0.9) #volta pra base
 
@@ -128,7 +135,7 @@ async def start2(): #kraken
 
     #novo kraken
     await moverAz(37,500,0.5,0, 0, 5000,0.9) #Sai da zona
-    await giroAz(-470,0.4, 0.000002)
+    await giroAz(-470,0.45, 0.000002)
     await moverAz(33,600,0.4,0, -470, 3000,0.5)
     motor.run_for_degrees(port.A,300,-900)
     await moverAz(35, 500, 0.35,0, -470, 2000, 0.9)
@@ -139,7 +146,7 @@ async def start2(): #kraken
     await giroAz(-900, 0.4, 0.00002)
     await moverAz(21.3, 200, 0.2, 0, -900, 2000, 0.7)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,340,0,velocity=-300)
-    await giroAz(-380, 0.45, 0.000005)
+    await giroAz(-380, 0.45, 0.000002)
     await moverAz(70, -1000, 0, 0, -380, 10000, 0.7)
 
 
@@ -168,22 +175,22 @@ async def start4(): #travessia
 
 async def startbaseaz():
     await moverAz(135, 1110, 0.3, 0, 0, 10000, 0)
-    await giroAz(-550, 0.8, 0.00001)
+    await giroAz(-550, 0.7, 0.000002)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 600, 0, velocity=-500)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 800, 0, velocity=900)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 850, 0, velocity=900)
     '''await moverAz(20, -400, 0, -450, 2000, 0.5)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 450, 0, velocity=1110)'''
 
 async def start5(): #banana
     await moverAz(38,500,0,0, 0, 2000,0.75)#sai da base
-    await giroAz(-475,0.65, 0.000002)#vira pro barco
+    await giroAz(-475,0.7, 0.000002)#vira pro barco
     await moverAz(4.5,200,0, 0, -475, 2000,0)#levanta relativamente
     await motorindB(1450,900)#gira o barco
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 205, 0, velocity=-200)
     #await moverAz(10,-200,0, 0,-475,800,0)
     #await giroAz(-160,0.75, 0.00002)#vai em direção as coletas e amostras
     motor.run_for_degrees(port.B, 800, -900)
-    await giroAz(-160, 0.65, 0.000002)
+    await giroAz(-160, 0.7, 0.000002)
     await moverAz(28,500,0.35, 0, -160, 2000,0.7)#avança
     await motorindB(900,1000)
     await motorindA(600, 1000)
@@ -211,12 +218,15 @@ async def start6(): #sonar
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, -1550, 900, 1050)
 
 async def start7():
-    await moverAz(64, 400,0, 0, 0, 4000,0)#sai da base
-    await giroAz(-360, 0.55, 0)#faz um giro na baleia
+    await moverAz(60, 500,0, 0, 0, 5000,0)
+    await giroAz(-450, 0.45, 0.00002)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, 280, 400, 300)
+    '''await moverAz(64, 500,0, 0, 0, 5000,0)#sai da base
+    await giroAz(-360, 0.45, 0.000001)#faz um giro na baleia
     await moverAz(12.6, 100, 0, 0,-360,2000,0.9)#ativa o gatilho
-    await time(0.2)
+    #await time(0.2)
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,-360, 500,500)#faz um ré na baleia
-    await giroAz(-900, 0.55, 0.000002)
+    await giroAz(-900, 0.45, 0.000002)
     await moverAz(55, -600, 0,0 , -900,6000,0.9)#vai em direção a compartilhada na posição 90 graus para a direita
     await giroAz(-550, 0.6, 0.000015)
     await moverAz(9, 600, 0, 0, -550, 5000,0.9)#Vai sentido sonar em 55 graus a direita
@@ -227,10 +237,10 @@ async def start7():
     await giroAz(-700, 0.6, 0.0000015)
     await moverAz(48, -600, 0,0, -700, 2000,0.9)#anda em direção ao peixe pescador
     await giroAz(-900, 0.6, 0.000001)
-    await moverAz(10, 600, 0,0, -900, 2000,1)#deixa o polvo
+    await moverAz(10, 600, 0,0, -900, 2000,1)#deixa o polvo'''
 
-starts = [start1, start2,start4,startbaseaz,start5,start6,start7]
-indice_atual = 4
+starts = [start5, startini, start1, start2,start4,startbaseaz,start6,start7]
+indice_atual = 7
 
 async def statemachine():
     global indice_atual
