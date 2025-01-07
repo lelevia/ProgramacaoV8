@@ -115,12 +115,25 @@ async def time (tempo):
 
 
 async def startini():
-    await moverAz(65.5, 800, 0, 0, 0, 5000, 0)
+    await moverAz(27, 800, 0, 0, 0, 2000, 0)
     #await time(0.02)
-    await moverAz(110, 1100, 0.45, 0.000002, 900, 5000, 0.7)
-    await giroAz(1550, 0.6, 0.000003)
+    await giroAz(400, 0.6, 0.000002)
+    await moverAz(38, 600, 0, 0, 400, 2000, 0.7)
+    await giroAz(0, 0.55, 0.000002)
+    await moverAz(13, 500, 0, 0, 0, 5000, 0)
+    await motorindB(900, 1500)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 180, 0, velocity=-100)
+    #await moverAz(8, -500, -0, 0, 0, 2000, 0)
+    await giroAz(700, 0.55, 0.00002)
+    await moverAz(55, 700, 0.55, 0.000002, 700, 5000, 0)
+    await motorindA(150, 900)
+    await giroAz(1150, 0.65, 0.000003)
+    await moverAz(35, 700, 0, 0, 1150, 5000, 0)
+    await giroAz(1500, 0.65, 0.000003)
+    await moverAz(74, 1100, 0, 0, 1500, 10000, 0)
+    #await giroAz(1550, 0.6, 0.000003)
     #await moverAz(57, 1100, 0, 0, 1500, 10000, 0)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1,1300,0,acceleration=10000,velocity=1100)
+    #await motor_pair.move_for_degrees(motor_pair.PAIR_1,1300,0,acceleration=10000,velocity=1100)
 
 
 async def start1():
@@ -138,17 +151,16 @@ async def start1():
 async def start2(): #kraken
 
     #novo kraken
-    await moverAz(37,500,0.5,0, 0, 5000,0.9) #Sai da zona
-    await giroAz(-470,0.45, 0.000002)
+    await moverAz(37,600,0.5,0, 0, 2000,0.9) #Sai da zona
+    await giroAz(-470,0.55, 0.000002)
     await moverAz(33,600,0.4,0, -470, 3000,0.5)
     motor.run_for_degrees(port.A,300,-900)
-    await moverAz(35, 500, 0.35,0, -470, 2000, 0.9)
+    await moverAz(30, 500, 0.35,0, -470, 2000, 0.9)
     await motorindA(300, 1000)
-    await motorindB(250, 1100)
-    await giroAz(-530, 0.45, 0.000002)
-    await moverAz(44, -500, 0, 0, -530, 5000, 0.7)
+    #await giroAz(-530, 0.45, 0.000002)
+    await moverAz(34, -500, 0, 0, -470, 5000, 0.7)
     await giroAz(-900, 0.4, 0.00002)
-    await moverAz(21.3, 200, 0.2, 0, -900, 2000, 0.7)
+    await moverAz(20.5, 200, 0.2, 0, -900, 2000, 0.7)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,340,0,velocity=-300)
     await giroAz(-380, 0.45, 0.000002)
     await moverAz(70, -1000, 0, 0, -380, 10000, 0.7)
@@ -200,7 +212,7 @@ async def start5(): #banana
     await giroAz(-160, 0.7, 0.000002)
     await moverAz(28.1,550,0.35, 0, -160, 2000,0.7)#avança
     await motorindB(1150,1000)
-    await motorindA(700, 1000) 
+    await motorindA(700, 1000)
     #await moverAz(10,-600,0.35,-180,2000,0.35)
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,-1700, 1050,850)
 
@@ -233,7 +245,7 @@ async def start7():
     await motorindB(150, -900)
     await time(0.5)
 
-    
+
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 240, 0, velocity=-500)
     await giroAz(-900, 0.6, 0.000002)
 
@@ -251,7 +263,7 @@ async def start7():
 
 
 starts = [start5, startini, start1, start2, start3,start4,startbaseaz,start7]
-indice_atual = 7
+indice_atual = 0
 
 async def statemachine():
     global indice_atual
