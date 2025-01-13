@@ -143,21 +143,21 @@ async def start1():
 async def start2(): #kraken
 
     #novo kraken
-    await moverAz(37,650,0.5,0, 0, 2000,0.9) #Sai da zona
+    await moverAz(36,650,0.5,0, 0, 2000,0.9) #Sai da zona
     await giroAz(-470,0.65,0) 
     await moverAz(34,800,0.4,0, -470, 3000,0.5)
     motor.run_for_degrees(port.A,300,-900)
     await moverAz(28, 800, 0.35,0, -470, 2000, 0.9)
     await motorindA(300, 1000)
     #await giroAz(-530, 0.45, 0.000002)
-    await moverAz(34.5, -500, 0, 0, -470, 5000, 0.7)
+    await moverAz(34, -500, 0, 0, -470, 5000, 0.7)
     #await giroAz(-900, 0.6, 0.000002)
     await giroAz(-900,0.65, 0.000002)
     await moverAz(15, 200, 0, 0, -900, 2000, 0.55)
+    await motorindB(150, 1100)
     await time(0.1)
-    await motorindB(150, 600)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,340,0,velocity=-300)
-    await giroAz(-1700, 1,0)
+    await giroAz(-1700, 0.8,0)
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, 1050, 1100, 870)
     #await moverAz(70, 1000, 0, 0, -1790, 1000, 0.7)
 
@@ -217,29 +217,29 @@ async def start5(): #banana
     #await moverAz(10,-200,0, 0,-475,800,0)
     #await giroAz(-160,0.75, 0.00002)#vai em direção as coletas e amostras
     motor.run_for_degrees(port.B, 300, -1100)
-    await giroAz(-170, 0.55, 0)
+    await giroAz(-150, 0.55, 0)
     #await time(200)
     await moverAz(22,1000,0.35, 0, -150, 2000,0.7)#avança
-    motor.run_for_degrees(port.B,1350,1100)
+    motor.run_for_degrees(port.B,1100,1100)
     motor.run_for_degrees(port.A,700,800)
     await time(0.2)
     #await motorindB(1150,1000)
     #await motorindA(700, 1000)
     #await moverAz(10,-600,0.35,-180,2000,0.35)
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,-1700, 1050,800)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,-1700, 1050,850)
 
 
 async def start7():
     await moverAz(66.5, 750,0, 0, 0, 1000,0)
     #await motor_pair.move_for_degrees(motor_pair.PAIR_1, 180, 0, velocity=100)
     await giroAz(-390, 0.6, 0.000002)
-    await moverAz(18, 200, 0, 0, -390, 5000, 0.5)
+    await moverAz(16.6, 200, 0, 0, -390, 5000, 0.5)
     await motorindB(150, -300)
     await time(0.5)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 260, 0, velocity=-500)
-    await giroAz(-900, 0.7, 0.000002)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 360, 0, velocity=-500)
+    await giroAz(-900, 0.7, 0.000002)#0.000002
     await moverAz(34, -900, 0,0 , -900,6000,0)#40
-    await giroAz(-1250, 0.7, 0.000002)
+    await giroAz(-1350, 0.7, 0.000002)
     await moverAz(15, -600, 0,0 , -1350,2000,0.9) #vai em direcao a compartilhada
     await motorindA(1000,-900)
     await moverAz(10, 600, 0,0, -1350, 2000,0.9) #sai da compartilhada
