@@ -132,9 +132,9 @@ async def start1():
     
     await motor.run_for_degrees(port.B,550,-1100) #baixa a cremalheira
     await motorindA(1700, 1080) #pega o mergulhador e faz a parte de baixo
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1,120,0,velocity=-100)
-    await giroAz(-350, 0.8, 0.000002)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1,1000,0,velocity=-1000)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1,250,0,velocity=-100)
+    await giroAz(-320, 0.8, 0.000002)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1,900,0,velocity=-1000)
 
     #await giroAz(-400, 0.55, 0.000002) #faz uma curva e coleta as amostras
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, 750,150, -1050)
@@ -193,7 +193,7 @@ async def start4(): #travessia
     await giroAz(0, 0.5, 0)
     await moverAz(81, 1100, 0.3, 0, 0, 10000,0.5)#91
     await giroAz(-450, 0.5, 0)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 530, 0, velocity=-1000)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 560, 0, velocity=-1000)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 1000, 0, velocity=1100)
         
 
@@ -209,7 +209,7 @@ async def startbaseaz():
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 450, 0, velocity=1110)'''
 
 async def start5(): #banana
-    await moverAz(27.5,1000,0,0, 0, 2000,0.75)#sai da base
+    await moverAz(28.5,1000,0,0, 0, 2000,0.75)#sai da base
     await giroAz(-440,0.45, 0.000001)#vira pro barco
     await moverAz(5,500,0, 0, -440, 2000,0)#levanta relativamente
     await motorindB(1000,1100)#gira o barco #1450
@@ -217,16 +217,16 @@ async def start5(): #banana
     #await moverAz(10,-200,0, 0,-475,800,0)
     #await giroAz(-160,0.75, 0.00002)#vai em direção as coletas e amostras
     motor.run_for_degrees(port.B, 300, -1100)
-    await giroAz(-150, 0.55, 0)
+    await giroAz(-70, 0.55, 0)
     #await time(200)
-    await moverAz(22,1000,0.35, 0, -150, 2000,0.7)#avança
+    await moverAz(24,1000,0.35, 0, -70, 2000,0.7)#avança
     motor.run_for_degrees(port.B,1100,1100)
     motor.run_for_degrees(port.A,700,800)
     await time(0.2)
     #await motorindB(1150,1000)
     #await motorindA(700, 1000)
     #await moverAz(10,-600,0.35,-180,2000,0.35)
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,-1700, 1050,850)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1,-1700, 1050,800)
 
 
 async def start7():
@@ -243,9 +243,9 @@ async def start7():
     await moverAz(15, -600, 0,0 , -1350,2000,0.9) #vai em direcao a compartilhada
     await motorindA(1000,-900)
     await moverAz(10, 600, 0,0, -1350, 2000,0.9) #sai da compartilhada
-    await giroAz(-700, 0.7, 0.0000015)
-    await moverAz(43, -700, 0,0, -700, 2000,0.9)#anda em direção ao peixe pescador
-    await moverAz(9, 1000, 0,0, -700, 2000,1)#deixa o polvo
+    await giroAz(-820, 0.7, 0.0000015)
+    await moverAz(43, -700, 0,0, -820, 2000,0.9)#anda em direção ao peixe pescador
+    await moverAz(9, 1000, 0,0, -820, 2000,1)#deixa o polvo
 
 
 
