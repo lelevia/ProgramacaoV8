@@ -5,7 +5,7 @@ import runloop
 
 motor_pair.pair(motor_pair.PAIR_1, port.E, port.F)
 
-
+#função de conversão
 def conversao (cm):
     y = (360*cm)/17.5
     return y
