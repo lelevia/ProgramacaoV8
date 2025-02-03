@@ -239,7 +239,7 @@ async def start7():
     await giroAz(-1350, 0.7, 0.000002)
     await moverAz(16, -600, 0,0 , -1350,2000,0.9) #vai em direcao a compartilhada
     #await motorindA(1000,-900)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 260, 0, velocity=360)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 220, 0, velocity=360)
     #await moverAz(8, 600, 0,0, -1350, 2000,0.9) #sai da compartilhada
 
     await giroAz(-730, 0.7, 0)
