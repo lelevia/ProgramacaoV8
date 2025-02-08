@@ -171,11 +171,13 @@ async def start3(): #trident
     await giroAz(500, 1, 0.000002)#500
     await moverAz(20, 800, 0, 0, 500, 2000,0.9)
     await motor.run_for_degrees(port.B, 400, -500)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 600, 0, velocity=-70)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 240, 0, velocity=-60)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 50, 0, velocity=60)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 330, 0, velocity=-100)
     #await motor.run_for_degrees(port.B, 900, -500)
     """await motor_pair.move_for_degrees(motor_pair.PAIR_1, 100, 0, velocity=-300)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 170, 0, velocity=-300)"""
-    await giroAz(0, 3.2, 0)
+    await giroAz(100, 3, 0)
 
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 1950, 0, velocity=-1200)
 
