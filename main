@@ -168,8 +168,8 @@ async def start2(): #kraken
 async def start3(): #trident
     await moverAz(45, 600, 0.3, 0, 0, 1000,0.7)#52 era #50
     #await time(1)
-    await giroAz(500, 1, 0.000002)#500
-    await moverAz(20, 800, 0, 0, 500, 2000,0.9)
+    await giroAz(510, 1, 0.000002)#500
+    await moverAz(25, 300, 0, 0, 510, 2000,0.9)
     await motor.run_for_degrees(port.B, 400, -500)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 240, 0, velocity=-60)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 50, 0, velocity=60)
