@@ -1,4 +1,3 @@
-
 from hub import port, motion_sensor, button, light_matrix
 import motor
 import motor_pair
@@ -169,7 +168,7 @@ async def start3(): #trident
     await moverAz(45, 600, 0.3, 0, 0, 1000,0.7)#52 era #50
     #await time(1)
     await giroAz(510, 1, 0.000002)#500
-    await moverAz(25, 300, 0, 0, 510, 2000,0.9)
+    await moverAz(24, 300, 0, 0, 510, 2000,0.9)
     await motor.run_for_degrees(port.B, 400, -500)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 240, 0, velocity=-60)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 50, 0, velocity=60)
@@ -238,16 +237,16 @@ async def start7():
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 300, 0, velocity=-500)
 
     await giroAz(-900, 0.6, 0.000002)#0.000002
-    await moverAz(36, -900, 0,0, -900,3000,0.9)#40
+    await moverAz(34, -900, 0,0, -900,3000,0.9)#40''
     await giroAz(-1350, 0.7, 0.000002)
     await moverAz(16, -600, 0,0 , -1350,2000,0.9) #vai em direcao a compartilhada
     #await motorindA(1000,-900)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 190, 0, velocity=360)
     #await moverAz(8, 600, 0,0, -1350, 2000,0.9) #sai da compartilhada
 
-    await giroAz(-730, 0.7, 0)
-    await moverAz(30, -700, 0,0, -730, 2000,0.9)#anda em direção ao peixe pescador
-    await moverAz(15, 800, 0,0, -730, 2000,1)#deixa o polvo
+    await giroAz(-740, 0.7, 0)
+    await moverAz(30, -700, 0,0, -740, 2000,0.9)#anda em direção ao peixe pescador
+    await moverAz(15, 800, 0,0, -740, 2000,1)#deixa o polvo
 
 
 
