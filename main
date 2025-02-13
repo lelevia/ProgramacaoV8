@@ -116,7 +116,7 @@ async def startini():
     await giroAz(1130, 0.65, 0.00003)
     await moverAz(29, 1100, 0, 0, 1130, 10000, 0)
     await giroAz(1500, 0.75, 0.00003)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 1200, 0, velocity=1100)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 1300, 0, velocity=1100)
 
     #await giroAz(1550, 0.6, 0.000003)
     #await moverAz(57, 1100, 0, 0, 1500, 10000, 0)
@@ -160,7 +160,10 @@ async def start2(): #kraken
     await time(0.3)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1,340,0,velocity=-300)
     await giroAz(-1700, 0.8,0)
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, 1050, 1100, 870)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, 1150, 1100, 870)
+    #await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, 120, 1000, 1000)
+    
+
     #await moverAz(70, 1000, 0, 0, -1790, 1000, 0.7)
 
 
@@ -228,10 +231,10 @@ async def start5(): #banana
     #await giroAz(-900,1.6,0)
 
 async def start7():
-    await moverAz(69, 650,0, 0, 0, 1000,0)
+    await moverAz(68.8, 650,0, 0, 0, 1000,0)
     #await motor_pair.move_for_degrees(motor_pair.PAIR_1, 180, 0, velocity=100)
     await giroAz(-390, 0.6, 0.000002)
-    await moverAz(10.8, 200, 0, 0, -390, 5000, 0.5)
+    await moverAz(11, 200, 0, 0, -390, 5000, 0.5)
     await motorindB(-100, -300)
     await time(0.4)
     await motor_pair.move_for_degrees(motor_pair.PAIR_1, 300, 0, velocity=-500)
@@ -241,12 +244,13 @@ async def start7():
     await giroAz(-1350, 0.7, 0.000002)
     await moverAz(16, -600, 0,0 , -1350,2000,0.9) #vai em direcao a compartilhada
     #await motorindA(1000,-900)
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 190, 0, velocity=360)
+    await motor_pair.move_for_degrees(motor_pair.PAIR_1, 200, 0, velocity=360)
     #await moverAz(8, 600, 0,0, -1350, 2000,0.9) #sai da compartilhada
 
-    await giroAz(-740, 0.7, 0)
-    await moverAz(30, -700, 0,0, -740, 2000,0.9)#anda em direção ao peixe pescador
-    await moverAz(15, 800, 0,0, -740, 2000,1)#deixa o polvo
+    await giroAz(-750, 0.7, 0)
+    await moverAz(30, -700, 0,0, -750, 2000,0.9)#anda em direção ao peixe pescador
+    await giroAz(-760, 0.7, 0)
+    await moverAz(15, 800, 0,0, -760, 2000,1)#deixa o polvo
 
 
 
